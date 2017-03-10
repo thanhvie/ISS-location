@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>ISS craft location</title>
+    <script src="libraries/p5.js" type="text/javascript"></script>
+    <script src="libraries/p5.dom.js" type="text/javascript"></script>
+    <script src="libraries/p5.sound.js" type="text/javascript"></script>
+    <script src="sketch.js" type="text/javascript"></script>
+
+    <style>
+     body
+     {
+       padding: 5px;
+       margin: 5px;
+     }
+     canvas
+     {
+       vertical-align: top;
+     }
+     h1
+     {
+       padding-left: 5px;
+       padding-top: 5px;
+       font-family: monospace;
+       color: navy;
+     }
+     div
+     {
+       padding-left: 5px;
+       padding-top: 5px;
+       padding-bottom: 5px;
+       font-family: monospace;
+       color: navy;
+       background-color: darkgray;
+       width: 1024px;
+       font-size: 130%;
+     }
+     </style>
+  </head>
+
+  <body>
+    <h1>ISS location now</h1>
+    <div>
+        <p id = "lonvalue"></p>
+        <p id = "latvalue"></p>
+    </div>
+    <br>
+  </body>
+</html>
