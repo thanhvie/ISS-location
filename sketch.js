@@ -132,7 +132,8 @@ function draw(){
         displayOff();
       }
 
-      else if (count >= 60){
+      else if (count >= 60)
+      {
         count = 0;
       }
 
