@@ -17,6 +17,7 @@
      canvas
      {
        vertical-align: top;
+
      }
      h1
      {
@@ -25,26 +26,53 @@
        font-family: monospace;
        color: navy;
      }
-     div
+     #dmain
      {
        padding-left: 5px;
        padding-top: 5px;
-       padding-bottom: 5px;
+       padding-bottom: 10px;
        font-family: monospace;
        color: navy;
        background-color: darkgray;
-       width: 1024px;
+       width: 512px;
        font-size: 130%;
+       border-style: dashed;
+       border-color: navy;
+     }
+     #div1{
+       float: left;
+       padding-right: 40px;
+     }
+     #mapStyle{
+       font-family: monospace;
+       color: navy;
+       background-color: darkgray;
+       font-size: 80%;
      }
      </style>
   </head>
 
   <body>
     <h1>ISS location now</h1>
-    <div>
+    <!--p>This program to simulate the current ISS position on the world map</p-->
+  <div id = "dmain">
+    <div id="div1">
         <p id = "lonvalue"></p>
         <p id = "latvalue"></p>
     </div>
+    <div id = "div2">
+      <p>Change map styles</p>
+      <select id = mapStyle>
+          <option value="satellite-streets-v9">satellite-streets</option>
+          <option value="streets-v9">streets</option>
+          <option value="outdoors-v9">outdoors</option>
+          <option value="light-v9">light</option>
+          <option value="dark-v9">dark</option>
+          <option value="satellite-v9">satellite</option>
+      </select>
+      <!--button id = btnRun>Run</button-->
+    </div>
+  </div>
     <br>
   </body>
 </html>

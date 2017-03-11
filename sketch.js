@@ -1,33 +1,34 @@
 //declare global variables
 var mapimg ;
 var issurl = "http://api.open-notify.org/iss-now.json";
+var mapAPI = "https://api.mapbox.com/styles/v1/mapbox/";
+var mapStyle = "satellite-streets-v9";
+var mapSize = "/static/0,0,1,0,0/1024x512?access_token=";
+var mapKey = "pk.eyJ1IjoidGhhbmh2aWUiLCJhIjoiY2l6bzJseWhmMDI3bDJxazd0b3Zvamk0eiJ9.O6edL33qfILaYegh41SEvw";
 
+//(lon, lat) of center point of window
 var clat = 0;
 var clon = 0;
 
+//(lon, lat) of ISS craft
 var issX;
 var issY;
 
-var img;
+//zoom level variables
 var zoom = 1;
 
+//variables for mapping with html elements
 var lonvalue;
 var latvalue;
-
-var lon0;
-var lat0;
-
 var canvas;
-
-var on = false;
-var off = false;
 
 var count = 0;
 
+var cbxStyles;
+var dmain;
 function preload()
 {
-  mapimg = loadImage("https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/static/0,0,1,0,0/1024x512?access_token=pk.eyJ1IjoidGhhbmh2aWUiLCJhIjoiY2l6bzJseWhmMDI3bDJxazd0b3Zvamk0eiJ9.O6edL33qfILaYegh41SEvw");
-  //mapimg = loadImage("https://api.mapbox.com/styles/v1/mapbox/light-v8/static/0,0,1,0,0/1024x512?access_token=pk.eyJ1IjoidGhhbmh2aWUiLCJhIjoiY2l6bzJseWhmMDI3bDJxazd0b3Zvamk0eiJ9.O6edL33qfILaYegh41SEvw");
+   mapimg = loadImage(mapAPI + mapStyle + mapSize + mapKey);
 }
 
 function askISS()
@@ -56,7 +57,7 @@ function getData(data){
 //function return new longtitude value
 //reference this article : https://en.wikipedia.org/wiki/Mercator_projection
 function mercX(lon){
-  lon0 = lon;
+  //lon0 = lon;
   lon = radians(lon);
   var a = (256/PI)*pow(2,zoom);
   var b = lon + PI;
@@ -66,7 +67,7 @@ function mercX(lon){
 //mapping latitude value to world mercator projection mapping
 //fuction return new latitude value
 function mercY(lat){
-  lat0 = lat;
+  //lat0 = lat;
   lat = radians(lat);
   var a = (256/PI)*pow(2,zoom);
   var b = tan(PI/4 + lat/2);
@@ -79,14 +80,25 @@ function setup() {
 
   //create canvas
   canvas = createCanvas(1024,512);
-
+  //canvas = select("#defaultCanvas0");
   //mapping lonvalue & latvalue variables with lonvalue & latvalue html elements accordingly
   lonvalue = select("#lonvalue");
   latvalue = select("#latvalue");
 
+  cbxStyles = select("#mapStyle");
+  //var btnRun = select("#btnRun");
+  cbxStyles.changed(cbxEvent);
+  dmain = select("#dmain");
+  dmain.position(10,630);
+
   //run askISS function every 1 second
   setInterval(askISS,1000);
-  setInterval(showISS,500);
+}
+
+function cbxEvent(){
+  mapStyle = cbxStyles.value();
+  preload();
+  console.log(mapStyle);
 }
 
 //function draw - support to run at frequency of 60Hz
@@ -102,9 +114,6 @@ function draw(){
     //get (lon,lat) value of center point on mercator map
     var cx = mercX(clon);
     var cy = mercY(clat);
-
-    //console.log(cx);
-    //console.log(cy);
 
     //if issY is true (exist), do the if statement
     if(issY)
@@ -132,23 +141,11 @@ function draw(){
   }
 
   function displayOn(){
-    on = false;
-    off = true;
     stroke(255,0,255);
     fill(255);
   }
 
   function displayOff(){
-    on = true;
-    off = false;
     stroke(0);
     fill(0);
-  }
-
-  function showISS(){
-    if(on == true && off == false){
-      displayOn();
-    }else if(on == false && off == true){
-      displayOff();
-    }
   }
